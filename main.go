@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"gabaithon-09-back/database"
+	"gabaithon-09-back/routes"
+)
 
 func main() {
-	fmt.Println("Hello, World!!!!!!")
+	database.Migrate()
+	router := routes.GetApiRouter(database.DB)
+	router.Run(":8082")
 }

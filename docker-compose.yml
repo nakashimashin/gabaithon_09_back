@@ -3,6 +3,8 @@ version: '3.8'
 services:
   gabaithon-09-back:
     container_name: gabaithon-09-back
+    depends_on:
+      - gabaithon-09-db
     volumes:
       - ./:/gabaithon-09-back
     tty: true
@@ -12,3 +14,26 @@ services:
     ports:
       - "8082:8082"
     command: sh -c 'air'
+    env_file:
+      - .env
+
+  gabaithon-09-db:
+    container_name: gabaithon-09-db
+    build:
+      context: .
+      dockerfile: db.dockerfile
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 3306:3306
+    tty: true
+
+volumes:
+  db_data:

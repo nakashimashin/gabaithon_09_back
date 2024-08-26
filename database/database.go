@@ -2,6 +2,8 @@ package database
 
 import (
 	"fmt"
+	"gabaithon-09-back/models"
+	"log"
 	"os"
 
 	"gorm.io/driver/mysql"
@@ -26,4 +28,13 @@ func Connect() *gorm.DB {
 		panic("failed to connect database")
 	}
 	return db
+}
+
+func Migrate() {
+	err := DB.AutoMigrate(&models.User{})
+	if err != nil {
+		log.Fatalf("failed to migrate: %v", err)
+	} else {
+		log.Println("migrate success")
+	}
 }

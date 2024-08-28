@@ -22,6 +22,11 @@ type SignUpInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+type LoginInput struct {
+	Email    string `json:email binding:"required"`
+	Password string `json:password binding:"required"`
+}
+
 func Encrypt(char string) string {
 	encryptText := fmt.Sprintf("%x", sha256.Sum256([]byte(char)))
 	return encryptText
@@ -54,4 +59,15 @@ func (user *User) Validate() error {
 		),
 	)
 	return err
+}
+
+func FindUserByEmail(db *gorm.DB, email string) (User, error) {
+	var user User
+	result := db.Where("email = ?", email).First(&user)
+
+	return user, result.Error
+}
+
+func (u *User) VerifyPassword(inputPassword string) bool {
+	return u.Password == Encrypt(inputPassword)
 }

@@ -27,7 +27,7 @@ func GetApiRouter(db *gorm.DB) *gin.Engine {
 		auth := v1.Group("/auth")
 		{
 			auth.POST("/signup", handler.SignUpHandler)
-			auth.POST("/login", handler.LoginHandler)
+			auth.POST("/signin", handler.SignInHandler)
 		}
 	}
 

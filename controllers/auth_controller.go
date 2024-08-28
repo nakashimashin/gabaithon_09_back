@@ -50,9 +50,9 @@ func (handler *Handler) SignUpHandler(context *gin.Context) {
 	})
 }
 
-func (handler *Handler) LoginHandler(context *gin.Context) {
-	var loginInput models.LoginInput
-	if err := context.ShouldBind(&loginInput); err != nil {
+func (handler *Handler) SignInHandler(context *gin.Context) {
+	var signInInput models.SignInInput
+	if err := context.ShouldBind(&signInInput); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
 			"message": "Invalid request body",
@@ -60,7 +60,7 @@ func (handler *Handler) LoginHandler(context *gin.Context) {
 		return
 	}
 
-	user, err := models.FindUserByEmail(handler.DB, loginInput.Email)
+	user, err := models.FindUserByName(handler.DB, signInInput.Name)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -69,7 +69,7 @@ func (handler *Handler) LoginHandler(context *gin.Context) {
 		return
 	}
 
-	if !user.VerifyPassword(loginInput.Password) {
+	if !user.VerifyPassword(signInInput.Password) {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "Invalid password",
 		})

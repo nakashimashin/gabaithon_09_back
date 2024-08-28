@@ -22,8 +22,8 @@ type SignUpInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
-type LoginInput struct {
-	Email    string `json:email binding:"required"`
+type SignInInput struct {
+	Name     string `json:name binding:"required"`
 	Password string `json:password binding:"required"`
 }
 
@@ -61,9 +61,9 @@ func (user *User) Validate() error {
 	return err
 }
 
-func FindUserByEmail(db *gorm.DB, email string) (User, error) {
+func FindUserByName(db *gorm.DB, name string) (User, error) {
 	var user User
-	result := db.Where("email = ?", email).First(&user)
+	result := db.Where("name = ?", name).First(&user)
 
 	return user, result.Error
 }

@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "pkg/grpc";
+
 service MatchService {
     rpc FindMatch(MatchRequest) returns (stream MatchResponse);
 }

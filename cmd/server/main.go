@@ -83,7 +83,7 @@ func (s *MatchServer) FindMatch(req *matchpb.MatchRequest, stream matchpb.MatchS
 			}
 
 		case <-timeout:
-			return fmt.Errorf("timeout: no match found for Player IDですよね: %s", req.PlayerId)
+			return fmt.Errorf("timeout: no match found for Player ID: %s", req.PlayerId)
 		}
 	}
 }

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service MatchService {
+    rpc FindMatch(MatchRequest) returns (stream MatchResponse);
+}
+
+message MatchRequest {
+    string player_id = 1;
+}
+
+message MatchResponse {
+    string message = 1;
+}
